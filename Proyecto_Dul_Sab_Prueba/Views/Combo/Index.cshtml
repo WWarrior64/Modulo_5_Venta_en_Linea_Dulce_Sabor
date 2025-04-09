@@ -1,0 +1,278 @@
+﻿@*
+    Index de Combo
+*@
+@{
+    ViewBag.Title = "Catalogo de Combos - Dulce Sabor";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+
+            .header-links a {
+                text-decoration: none;
+                color: #333;
+                font-weight: normal;
+                padding: 5px 10px;
+                transition: color 0.3s ease;
+            }
+
+                .header-links a:hover {
+                    color: #ff6b47;
+                }
+
+        .separator {
+            width: 70px;
+            height: 3px;
+            background-color: #ff6b47;
+            margin-right: 890px;
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Carrusel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .combos-container {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .combo-card {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            flex: 0 0 300px; /* Fija el ancho de cada combo */
+        }
+
+        .combo-name {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: left;
+            position: absolute;
+            bottom: 0;
+            min-height: 80px; /* Altura mínima para uniformidad */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra verticalmente el texto */
+        }
+
+
+        /* Botones del carrusel */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff6b47;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .carousel-btn:hover {
+            background-color: #de5331;
+        }
+
+        .combo-details {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+            .combo-details:target {
+                display: flex; /* Se muestra cuando se hace clic en el enlace */
+            }
+
+        .combo-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .combo-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .combo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: #333;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+            .close-btn:hover {
+                color: #ff6b47;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Enlaces superiores -->
+        <div class="header">
+            <h2>Combos</h2>
+            <div class="header-links">
+                <a asp-area="" asp-controller="Platillo" asp-action="Index">Catálogo</a>
+                <p> | </p>
+                <a asp-area="" asp-controller="Combo" asp-action="Index">Combos</a>
+                <p> | </p>
+                <a asp-area="" asp-controller="Promocion" asp-action="Index">Promociones</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="filters">
+        <div class="separator"></div>
+    </div>
+
+    <br />
+    <br />
+
+    <!-- Contenedor del carrusel -->
+    <div class="carousel-container">
+        <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#10094;</button>
+        <div class="combos-container" id="combosContainer">
+            @foreach (var combo in (IEnumerable<dynamic>)ViewData["listadoDeCombos"])
+            {
+                <a href="#comboDetails-@combo.comboId" class="comboLink">
+                <div class="combo-card" style="background-image: url('@combo.imgUrl');">
+                    <div class="combo-name">
+                        <span>@combo.nombre</span>
+                        <span><strong>Precio:</strong> $@combo.precio</span>
+
+                        <!-- Formulario para añadir al carrito -->
+                        <form asp-action="AñadirItem" method="post">
+                            <input type="hidden" name="comboId" value="@combo.comboId" />
+                            <input type="hidden" name="precio" value="@combo.precio" />
+                            <input type="hidden" name="nombre" value="@combo.nombre" />
+                            <button type="submit" class="btn btn-sm" style="background-color: #ff6b47; color: white;">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+                </a>
+            }
+        </div>
+        <button class="carousel-btn next" onclick="moveCarousel(1)">&#10095;</button>
+
+        @foreach (var combo in (IEnumerable<dynamic>)ViewData["listadoDeCombos"])
+            {
+            <div id="comboDetails-@combo.comboId" class="combo-details">
+                <div class="combo-overlay"></div> <!-- Capa para permitir el cierre al hacer clic fuera -->
+
+                <div class="combo-info">
+                    <!-- Botón de cerrar (X) dentro del cuadro -->
+                    <a href="#" class="close-btn">&times;</a>
+                    <h3>@combo.nombre</h3>
+                    <img class="combo-image" src="@combo.imgUrl" alt="@combo.nombre" />
+                    <p>@combo.descripcion</p>
+                    <p><strong>Precio:</strong> $@combo.precio</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script>
+        let index = 0;
+        const container = document.getElementById("combosContainer");
+        const items = document.querySelectorAll(".combo-card");
+        const visibleItems = 3; // Muestra 3 combos por vista
+
+        function moveCarousel(direction) {
+            const itemWidth = items[0].offsetWidth + 15; // Ancho de cada combo con margen
+            const maxIndex = Math.ceil(items.length - visibleItems);
+
+            index += direction;
+
+            if (index < 0) index = 0;
+            if (index > maxIndex) index = maxIndex;
+
+            container.style.transform = `translateX(${-index * itemWidth}px)`;
+        }
+    </script>
+</body>
+</html>

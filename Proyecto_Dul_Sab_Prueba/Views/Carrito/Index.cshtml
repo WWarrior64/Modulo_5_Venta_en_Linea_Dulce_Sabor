@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Carrito de Compras - Dulce Sabor";
+}
+<hr />
+<h2>Mi Carrito</h2>
+<hr />
+<br />
+<p>Los productos seleccionados (platillo, combo y/o promoción) se mostrarán en su carrito.</p>
+
+<form asp-action="ActualizarCarrito">
+    <div class="form-group row mb-4">
+        <div class="col-md-8">
+            <div class="text-center rounded border bg-dark text-white p-3">
+                <h4 class="mb-0">Total de productos en el carrito: @(ViewData["listadoCarrito"] != null ? ((IEnumerable<dynamic>)ViewData["listadoCarrito"]).Count() : 0)</h4>
+            </div>
+
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-bordered text-center" style="background-color:#edeff2;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>@Html.Label("lblProducto","Producto")</th>
+                            <th>@Html.Label("lblDescripcion", "Descripción")</th>
+                            <th>@Html.Label("lblCantidad", "Cantidad")</th>
+                            <th>@Html.Label("lblPrecio", "Precio")</th>
+                            <th>@Html.Label("lblAcciones", "Acciones")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (IEnumerable<dynamic>)ViewData["listadoCarrito"])
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.platilloImg != null)
+                                    {
+                                        <img src="@Url.Content(item.platilloImg)" alt="@item.nombrePlat" style="width:80px;" />
+                                    }
+                                    else if (item.comboImg != null)
+                                    {
+                                        <img src="@Url.Content(item.comboImg)" alt="@item.nombreComb" style="width:80px;" />
+                                    }
+                                    else if (item.promocionImg != null)
+                                    {
+                                        <img src="@Url.Content(item.promocionImg)" alt="@item.nombreProm" style="width:80px;" />
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.nombrePlat != null)
+                                    {
+                                        <strong>@item.nombrePlat</strong>
+
+                                        <br />
+                                    }
+                                    else if (item.nombreComb != null)
+                                    {
+                                        <strong>@item.nombreComb</strong>
+
+                                        <br />
+                                    }
+                                    else if (item.nombreProm != null)
+                                    {
+                                        <strong>@item.nombreProm</strong>
+
+                                        <br />
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.platilloDescrip != null)
+                                    {
+                                        @item.platilloDescrip
+                                    }
+                                    else if (item.comboDescrip != null)
+                                    {
+                                        @item.comboDescrip
+                                    }
+                                    else if (item.promocionDescrip != null)
+                                    {
+                                        @item.promocionDescrip
+                                    }
+                                </td>
+                                <td>
+                                    @Html.Hidden("ItemId[]", (object)item.ItemId)
+                                    @Html.TextBox("Cantidad[]", (object)item.cantidad, new { @class = "form-control text-center", type = "number", min = "1" })
+
+                                </td>
+                                <td>
+                                    @if (item.platilloPrecio > 0 )
+                                    {
+                                        @String.Format("{0:C}", item.platilloPrecio)
+                                    }
+                                    else if (item.comboPrecio > 0)
+                                    {
+                                        @String.Format("{0:C}", item.comboPrecio)
+                                    }
+                                    else if (item.promocionPrecio > 0)
+                                    {
+
+                                        @String.Format("{0:C}", item.promocionPrecio)
+
+                                    }
+                                    else if (item.promocionDesc > 0 && item.promocionPrecio == 0)
+                                    {
+                                        <span style="color:red;">@String.Format("{0:C}", item.promocionDesc)</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Eliminar", "RemoveItem", new { id = item.ItemId }, new { @class = "btn btn-sm", @style = "background-color: darkorange; color: white;" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <form asp-action="EnviarDatos" method="post">
+        <div class="col-md-4">
+            <div class="card bg-dark text-white border-white">
+                <div class="card-body">
+                    <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
+                    <h4>Total: @String.Format("{0:C}", ViewData["Total"])</h4>
+                    <hr />
+
+                    <p><b>Se aceptan los siguientes métodos de pago</b></p>
+                    <div style="display: flex; align-items: center; gap: 35px;">
+                        <img src="/Images/paypal.png" alt="PayPal" width="50" />
+                        <img src="/Images/mastercard.png" alt="MasterCard" width="50" />
+                        <img src="/Images/visa.png" alt="Visa" width="50" />
+                    </div>
+
+                    <hr />
+                    <div class="text-right">
+                        <span><b>Código Promocional / Cupón</b></span>
+                        @Html.TextBox("couponCode", "", new { @class = "form-control text-center", placeholder = "Ingrese código" })
+                        <button style="background-color: #ff6b47; color: white;" type="submit" name="action" value="applyCoupon" class="btn btn-block mt-3">
+                            Aplicar Cupón
+                        </button>
+                    </div>
+
+                    <hr />
+                    <div class="text-center">
+                        <button style="background-color: #ff6b47; color: white;" type="submit" name="action" value="checkout" class="btn btn-block">
+                            Finalizar Compra
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</form>
