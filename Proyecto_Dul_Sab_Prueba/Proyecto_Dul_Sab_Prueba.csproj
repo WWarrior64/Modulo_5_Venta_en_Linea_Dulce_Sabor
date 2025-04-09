@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Images\burger.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="wwwroot\Images\mastercard.png" />
     <None Remove="wwwroot\Images\paypal.png" />
     <None Remove="wwwroot\Images\visa.png" />
@@ -14,6 +18,9 @@
 
   <ItemGroup>
     <None Include="Views\Combo\Index.cshtml" />
+    <None Include="Views\Invoice\Invoice.cshtml" />
+    <None Include="Views\Login\Autenticar.cshtml" />
+    <None Include="Views\Pedido\Pedido.cshtml" />
     <None Include="Views\Platillo\Index.cshtml" />
     <None Include="Views\Promocion\Index.cshtml" />
   </ItemGroup>
@@ -24,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="wwwroot\Images\burger.jpg" />
     <Resource Include="wwwroot\Images\mastercard.png" />
     <Resource Include="wwwroot\Images\paypal.png" />
     <Resource Include="wwwroot\Images\visa.png" />

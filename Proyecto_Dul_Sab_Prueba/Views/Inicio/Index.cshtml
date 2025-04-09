@@ -1,0 +1,178 @@
+﻿@{
+    ViewBag.Title = "Bienvenidos a Dulce Sabor - Restaurante";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #ff7f00; /* Fondo naranja */
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            padding-bottom: 100px;
+        }
+
+        .content-container {
+            background-color: white; /* Fondo blanco */
+            padding: 20px;
+        }
+
+        .hero-section {
+            background-image: url('~/images/restaurante-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            color: black;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+            .hero-section h1 {
+                font-size: 4rem;
+            }
+
+        .btn-primary {
+            background-color: #d9534f;
+            border: none;
+        }
+
+        .feature-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor principal con fondo blanco -->
+    <div class="content-container">
+        <!-- Imagen antes de todo -->
+        <img src="https://luzdeco.com/cdn/shop/articles/septiembre_blog_luzdeco-01.jpg?v=1726685261" alt="Imagen principal" class="img-fluid w-100">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>Bienvenidos a Dulce Sabor</h1>
+                <p>Disfruta de una experiencia gastronómica única con los mejores sabores locales e internacionales.</p>
+                <a href="#menu" class="btn btn-primary btn-lg">Ver Menú</a>
+            </div>
+        </section>
+
+        <!-- Sección de Introducción -->
+        <section class="container mt-5">
+            <h2 class="section-title">¿Quiénes somos?</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>En Dulce Sabor, nos especializamos en ofrecer platos frescos, auténticos y deliciosos que satisfacen todos los gustos. Ya sea que busques un almuerzo rápido o una cena elegante, tenemos algo para ti. Nos enorgullece trabajar solo con ingredientes frescos y de calidad para brindar la mejor experiencia gastronómica.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.adsttc.com/media/images/61f3/7151/3e4b/3184/b600/0007/newsletter/PORTADA_50FRIENDS_01.jpg?1643344203" alt="Interior del Restaurante" class="img-fluid">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Menú Destacado -->
+        <section class="container mt-5" id="menu">
+            <h2 class="section-title">Platillos a Encontrar</h2>
+            <div class="row">
+                <!-- Platos Destacados -->
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPDdiH_eqW73LIjY-2gPhPY0tvdGBRnuEOuw&s" alt="Hamburguesas">
+                        <div class="card-body">
+                            <h5 class="card-title">Hamburguesas</h5>
+                            <p class="card-text">Deliciosas hamburguesas con ingredientes frescos y un toque único de sabor.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <img src="https://www.cocinadelirante.com/800x600/filters:format(webp):quality(75)/sites/default/files/images/2023/08/receta-de-pizza-sin-horno.jpg" alt="Pizza">
+                        <div class="card-body">
+                            <h5 class="card-title">Pizzas</h5>
+                            <p class="card-text">Un plato exquisito, ideal para disfrutar en cualquier momento del día.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <img src="https://content-cocina.lecturas.com/medio/2024/11/11/postres-navidad_9582b211_241111140530_1200x1200.webp" alt="Postres">
+                        <div class="card-body">
+                            <h5 class="card-title">Postres</h5>
+                            <p class="card-text">Sabores únicos que cautivan a todos los paladares. ¡No te lo puedes perder!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Testimonios -->
+        <section class="container mt-5">
+            <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p>"Una experiencia increíble. El sabor de cada plato es único y delicioso. ¡Volveré pronto!"</p>
+                        <footer class="blockquote-footer">Juan Pérez</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p>"El ambiente es increíble y la comida aún mejor. ¡Altamente recomendado!"</p>
+                        <footer class="blockquote-footer">María López</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p>"La mejor comida de la ciudad. Siempre una experiencia placentera cada vez que vengo."</p>
+                        <footer class="blockquote-footer">Carlos Fernández</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Contacto -->
+        <section class="container mt-5" id="contacto">
+            <h2 class="section-title">Contáctanos</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>¿Tienes preguntas o necesitas hacer una reserva? ¡Estamos aquí para ayudarte! Ponte en contacto con nosotros y con gusto te atenderemos.</p>
+                </div>
+                <div class="col-md-6">
+                    <form asp-action="EnviarConsulta" method="post">
+                        <div class="form-group">
+                            @Html.Label("Nombre")
+                            @Html.TextBox("nombre", null, new { @class = "form-control", placeholder = "Tu nombre" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Correo Electrónico")
+                            @Html.TextBox("correo", null, new { @class = "form-control", placeholder = "Tu correo electrónico" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Mensaje")
+                            @Html.TextArea("mensaje", null, new { @class = "form-control", placeholder = "Tu mensaje", rows = 4 })
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

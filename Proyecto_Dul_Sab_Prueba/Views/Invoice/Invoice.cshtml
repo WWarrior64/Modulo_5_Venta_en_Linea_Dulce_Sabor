@@ -1,0 +1,81 @@
+﻿@*@model VIstas_de_pago_y_fatura.Models.Pedido
+
+@{
+    ViewBag.Title = "Confirmación de Pago - Dulce Sabor";
+    var subtotal = Model.ResumenPedido != null && Model.ResumenPedido.Any()
+        ? Model.ResumenPedido.Sum(item => item.Precio)
+        : 0m;
+    var iva = subtotal * 0.13m; // IVA del 13%
+    var total = subtotal + iva;
+}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card w-75">
+        <div class="card-body">
+            <h1 class="text-center text-success">Pago Realizado Exitosamente</h1>
+            <div class="text-center mb-3">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+            </div>
+
+            <!-- 📌 Factura -->
+            <h2 class="text-center">FACTURA #000000</h2>
+            <hr />
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Nombre:</strong> @Model.DatosEnvio.Nombre</li>
+                <li class="list-group-item"><strong>Email:</strong> @Model.DatosEnvio.Email</li>
+                <li class="list-group-item"><strong>Teléfono:</strong> @Model.DatosEnvio.Telefono</li>
+                <li class="list-group-item"><strong>Fecha:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</li>
+                <li class="list-group-item"><strong>Orden de Pedido:</strong> #00000</li>
+                <li class="list-group-item"><strong>Tipo de Pago:</strong> @Model.MetodoPago.Tipo</li>
+            </ul>
+
+            <!-- 📌 Tabla de Productos -->
+            <h3 class="text-center mt-3">Detalles del Pedido</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ResumenPedido != null && Model.ResumenPedido.Any())
+                        {
+                            foreach (var item in Model.ResumenPedido)
+                            {
+                                <tr>
+                                    <td>#@Model.ResumenPedido.IndexOf(item)</td>
+                                    <td>@item.Nombre - @item.Descripcion</td>
+                                    <td>@item.Cantidad</td>
+                                    <td>@String.Format("{0:C}", item.Precio)</td>
+                                    <td>@String.Format("{0:C}", item.Precio * 0.13m)</td>
+                                    <td>@String.Format("{0:C}", item.Precio * 1.13m)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="6" class="text-center">No hay productos en el pedido.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="text-right">
+                <h4>IVA: @String.Format("{0:C}", iva)</h4>
+                <h4>Total: @String.Format("{0:C}", total)</h4>
+            </div>
+
+            <!-- 📌 Acciones Abajo -->
+            <div class="text-center mt-4">
+                <button class="btn btn-warning mx-2">Descargar Factura</button>
+                <button class="btn btn-info mx-2">Ver Estado del Pedido</button>
+            </div>
+        </div>
+    </div>
+</div>*@

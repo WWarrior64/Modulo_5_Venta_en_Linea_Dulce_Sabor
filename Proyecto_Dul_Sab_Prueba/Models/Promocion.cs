@@ -25,7 +25,7 @@ namespace Proyecto_Dul_Sab_Prueba.Models
         public decimal precio { get; set; }
 
         [Display(Name = "Descuento")]
-        public decimal? descuento { get; set; }
+        public decimal descuento { get; set; }
 
         [Display(Name = "Fecha de inicio")]
         public DateTime fechainicio { get; set; }

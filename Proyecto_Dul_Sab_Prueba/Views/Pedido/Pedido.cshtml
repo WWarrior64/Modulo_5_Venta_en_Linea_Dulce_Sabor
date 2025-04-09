@@ -1,0 +1,165 @@
+﻿<form asp-action="CrearPedido" method="post">
+    <div class="row">
+        <!-- Columna Izquierda: Dirección de Envío -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Dirección de Envío</h3>
+                    <div class="form-group">
+                        @Html.Label("País")
+                        @Html.TextBox("pais", null, new { @class = "form-control", placeholder = "Ingrese su país" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Ciudad")
+                        @Html.TextBox("ciudad", null, new { @class = "form-control", placeholder = "Ingrese su ciudad" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Región")
+                        @Html.TextBox("region", null, new { @class = "form-control", placeholder = "Ingrese su región" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Resumen del Pedido + Pago -->
+        <div class="col-md-4 d-flex flex-column">
+            <!-- Detalles del Cliente -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3>Detalles del Cliente</h3>
+                    <p><strong>Nombre:</strong> @ViewData["usuario"]</p>
+                    <p><strong>Email:</strong> @ViewData["correo"]</p>
+                </div>
+            </div>
+
+            <!-- Resumen del Pedido -->
+            <div class="card mb-3 d-flex flex-column">
+                <div class="card-body">
+                    <h3>Resumen del Pedido</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewData["listadoCarrito"] != null && ((IEnumerable<dynamic>)ViewData["listadoCarrito"]).Any())
+                            {
+                                foreach (var item in (IEnumerable<dynamic>)ViewData["listadoCarrito"])
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.nombrePlat != null)
+                                            {
+                                                <strong>@item.nombrePlat</strong>
+                                            }
+                                            else if (item.nombreComb != null)
+                                            {
+                                                <strong>@item.nombreComb</strong>
+                                            }
+                                            else if (item.nombreProm != null)
+                                            {
+                                                <strong>@item.nombreProm</strong>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.platilloDescrip != null)
+                                            {
+                                                @item.platilloDescrip
+                                            }
+                                            else if (item.comboDescrip != null)
+                                            {
+                                                @item.comboDescrip
+                                            }
+                                            else if (item.promocionDescrip != null)
+                                            {
+                                                @item.promocionDescrip
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.cantidad,
+                                        </td>
+                                        <td>
+                                            @if (item.platilloPrecio > 0)
+                                            {
+                                                @String.Format("{0:C}", item.platilloPrecio)
+                                            }
+                                            else if (item.comboPrecio > 0)
+                                            {
+                                                @String.Format("{0:C}", item.comboPrecio)
+                                            }
+                                            else if (item.promocionPrecio > 0)
+                                            {
+                                                @String.Format("{0:C}", item.promocionPrecio)
+                                            }
+                                            else if (item.promocionDesc > 0 && item.promocionPrecio == 0)
+                                            {
+                                                <span style="color:red;">@String.Format("{0:C}", item.promocionDesc)</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">No hay productos en el carrito.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="text-right">
+                <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
+                <h4>Total: @String.Format("{0:C}", ViewData["Total"])</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pago -->
+    <div class="card mt-4 ">
+        <div class="card-body">
+            <h3>Método de Pago</h3>
+            <div class="form-group">
+                @Html.Label("Tipo")
+                @Html.DropDownList("metodopagoId", (SelectList)ViewData["MetodosPago"], "Seleccione un método", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Número de Tarjeta")
+                @Html.TextBox("NumeroTarjeta", null, new { @class = "form-control", placeholder = "Ingrese número de tarjeta" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Expiración")
+                @Html.TextBox("Expiracion", null, new { @class = "form-control", placeholder = "MM/AA" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("CVC")
+                @Html.TextBox("CVC", null, new { @class = "form-control", placeholder = "Código de seguridad" })
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">Pagar</button>
+        </div>
+    </div>
+
+    <!-- Recomendaciones -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3>Recomendaciones de Pago</h3>
+            <ul class="list-group">
+                <li class="list-group-item">Use una tarjeta válida con saldo suficiente.</li>
+                <li class="list-group-item">Verifique que el número de tarjeta esté correcto antes de confirmar.</li>
+                <li class="list-group-item">Si usa PayPal, asegúrese de estar conectado a su cuenta.</li>
+                <li class="list-group-item">Revise los términos y condiciones antes de procesar el pago.</li>
+            </ul>
+        </div>
+    </div>
+</form>

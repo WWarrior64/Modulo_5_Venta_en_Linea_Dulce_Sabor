@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_LayoutInicio";
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #ff9800, #ff5722);
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        display: flex;
+        width: 850px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-section {
+        width: 50%;
+        background: url('/Images/burger.jpg') no-repeat center center/cover;
+    }
+
+    .form-section {
+        width: 50%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        background: #ff5722;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-custom:hover {
+            background: #e64a19;
+        }
+
+    .social-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+        .social-buttons button {
+            width: 48%;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+    .btn-google {
+        background: #db4437;
+        color: white;
+    }
+
+    .btn-facebook {
+        background: #3b5998;
+        color: white;
+    }
+
+    .register-link {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .register-link a {
+            color: #ff5722;
+            text-decoration: none;
+        }
+</style>
+
+<div class="login-container">
+    <div class="image-section"></div>
+    <div class="form-section">
+        <h1>Bienvenido a Dulce Sabor</h1>
+        <form method="post">
+            <input type="email" name="txtemail" class="form-control" placeholder="Correo electrónico" required>
+            <input type="password" name="txtpassword" class="form-control" placeholder="Contraseña" required>
+            <button type="submit" class="btn-custom">Iniciar Sesión</button>
+        </form>
+        <div class="social-buttons">
+            <button class="btn-google" onclick="window.location.href='https://accounts.google.com/signin'">Google</button>
+            <button class="btn-facebook" onclick="window.location.href='https://www.facebook.com/login/'">Facebook</button>
+        </div>
+        <p class="register-link">¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+    </div>
+</div>

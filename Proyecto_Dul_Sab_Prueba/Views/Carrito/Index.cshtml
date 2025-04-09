@@ -7,9 +7,10 @@
 <br />
 <p>Los productos seleccionados (platillo, combo y/o promoción) se mostrarán en su carrito.</p>
 
-<form asp-action="ActualizarCarrito">
-    <div class="form-group row mb-4">
-        <div class="col-md-8">
+<div class="row mb-4">
+    <!-- Primer formulario con la tabla de productos -->
+    <form asp-action="ActualizarCarrito" class="col-md-8">
+        <div>
             <div class="text-center rounded border bg-dark text-white p-3">
                 <h4 class="mb-0">Total de productos en el carrito: @(ViewData["listadoCarrito"] != null ? ((IEnumerable<dynamic>)ViewData["listadoCarrito"]).Count() : 0)</h4>
             </div>
@@ -19,7 +20,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>@Html.Label("lblProducto","Producto")</th>
+                            <th>@Html.Label("lblProducto", "Producto")</th>
                             <th>@Html.Label("lblDescripcion", "Descripción")</th>
                             <th>@Html.Label("lblCantidad", "Cantidad")</th>
                             <th>@Html.Label("lblPrecio", "Precio")</th>
@@ -48,19 +49,16 @@
                                     @if (item.nombrePlat != null)
                                     {
                                         <strong>@item.nombrePlat</strong>
-
                                         <br />
                                     }
                                     else if (item.nombreComb != null)
                                     {
                                         <strong>@item.nombreComb</strong>
-
                                         <br />
                                     }
                                     else if (item.nombreProm != null)
                                     {
                                         <strong>@item.nombreProm</strong>
-
                                         <br />
                                     }
                                 </td>
@@ -81,10 +79,9 @@
                                 <td>
                                     @Html.Hidden("ItemId[]", (object)item.ItemId)
                                     @Html.TextBox("Cantidad[]", (object)item.cantidad, new { @class = "form-control text-center", type = "number", min = "1" })
-
                                 </td>
                                 <td>
-                                    @if (item.platilloPrecio > 0 )
+                                    @if (item.platilloPrecio > 0)
                                     {
                                         @String.Format("{0:C}", item.platilloPrecio)
                                     }
@@ -94,9 +91,7 @@
                                     }
                                     else if (item.promocionPrecio > 0)
                                     {
-
                                         @String.Format("{0:C}", item.promocionPrecio)
-
                                     }
                                     else if (item.promocionDesc > 0 && item.promocionPrecio == 0)
                                     {
@@ -112,9 +107,11 @@
                 </table>
             </div>
         </div>
+    </form>
 
-        <form asp-action="EnviarDatos" method="post">
-        <div class="col-md-4">
+    <!-- Segundo formulario con el checkout a la derecha -->
+    <form asp-action="Checkout" method="post" class="col-md-4">
+        <div >
             <div class="card bg-dark text-white border-white">
                 <div class="card-body">
                     <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
@@ -146,6 +143,5 @@
                 </div>
             </div>
         </div>
-        </form>
-    </div>
-</form>
+    </form>
+</div>

@@ -63,14 +63,15 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
         [HttpPost]
         public IActionResult Checkout(string couponCode)
         {
-            // 📌 Simulación de lógica para aplicar cupón
+            // Simulación de lógica para aplicar cupón
             if (!string.IsNullOrEmpty(couponCode))
             {
                 ViewData["MensajeDescuento"] = "Cupón aplicado correctamente. Descuento activado.";
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Pedido", "Pedido");
         }
+
 
         [HttpPost]
         public IActionResult ActualizarCarrito(int[] ItemId, int[] Cantidad)
