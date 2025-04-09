@@ -15,11 +15,6 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
 
         public IActionResult Index()
         {
-            var usuarioCorreo = HttpContext.Session.GetString("Correo");
-
-            // Pasar el correo a la vista principal
-            ViewBag.UsuarioCorreo = usuarioCorreo;
-
             return View();
         }
 
