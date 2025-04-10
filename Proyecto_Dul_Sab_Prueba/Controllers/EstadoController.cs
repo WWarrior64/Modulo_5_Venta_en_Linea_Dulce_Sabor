@@ -40,7 +40,7 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
 
             if (!pedidos.Any())
             {
-                return View("SinPedidos"); // 📌 Si no hay pedidos, mostrar otra vista
+                return View(); // 📌 Si no hay pedidos, mostrar otra vista
             }
 
             ViewData["ListadoPedidos"] = pedidos;

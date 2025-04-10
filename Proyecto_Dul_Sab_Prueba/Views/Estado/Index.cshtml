@@ -113,52 +113,61 @@
 <h2>Estado de tus Pedidos</h2>
 
 <div class="container">
-    @foreach (var pedido in (IEnumerable<dynamic>)ViewData["ListadoPedidos"])
+        @if (ViewData["ListadoPedidos"] == null || !((IEnumerable<dynamic>)ViewData["ListadoPedidos"]).Any())
     {
-        <div class="card-container">
-            <div class="pedido-details">
-                <h4>Pedido #@pedido.pedidoId</h4>
-                <p><strong>Cliente:</strong> @pedido.cliente.nombre</p>
-                <p><strong>Dirección:</strong> @pedido.cliente.direccion</p>
-                <p>
-                    <strong>Estado:</strong>
-                    <span class="estado-badge"
-                          style="background-color: @(pedido.estado == "Pendiente" ? "#dc3545" :
-                                                  pedido.estado == "En preparacion" ? "#ffc107" :
-                                                  pedido.estado == "En camino" ? "#007bff" :
-                                                  "#28a745")">
-                        @pedido.estado
-                    </span>
-                </p>
+        <div class="alert alert-warning text-center">
+            No tienes pedidos registrados actualmente.
+        </div>
+    }
+    else
+    {
+        @foreach (var pedido in (IEnumerable<dynamic>)ViewData["ListadoPedidos"])
+        {
+            <div class="card-container">
+                <div class="pedido-details">
+                    <h4>Pedido #@pedido.pedidoId</h4>
+                    <p><strong>Cliente:</strong> @pedido.cliente.nombre</p>
+                    <p><strong>Dirección:</strong> @pedido.cliente.direccion</p>
+                    <p>
+                        <strong>Estado:</strong>
+                        <span class="estado-badge"
+                              style="background-color: @(pedido.estado == "Pendiente" ? "#dc3545" :
+                                                      pedido.estado == "En preparacion" ? "#ffc107" :
+                                                      pedido.estado == "En camino" ? "#007bff" :
+                                                      "#28a745")">
+                            @pedido.estado
+                        </span>
+                    </p>
 
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill"
-                         style="width:@(pedido.estado == "Pendiente" ? "25%" :
-                                       pedido.estado == "En preparacion" ? "50%" :
-                                       pedido.estado == "En camino" ? "75%" : "100%");
-                                background: repeating-linear-gradient(
-                                    45deg, #ffc107, #ffc107 10px, #ffca28 10px, #ffca28 20px);">
-                        @(pedido.estado == "Pendiente" ? "25% Completado" :
-                            pedido.estado == "En preparacion" ? "50% Completado" :
-                            pedido.estado == "En camino" ? "75% Completado" : "100% Completado")
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"
+                             style="width:@(pedido.estado == "Pendiente" ? "25%" :
+                                           pedido.estado == "En preparacion" ? "50%" :
+                                           pedido.estado == "En camino" ? "75%" : "100%");
+                                    background: repeating-linear-gradient(
+                                        45deg, #ffc107, #ffc107 10px, #ffca28 10px, #ffca28 20px);">
+                            @(pedido.estado == "Pendiente" ? "25% Completado" :
+                                pedido.estado == "En preparacion" ? "50% Completado" :
+                                pedido.estado == "En camino" ? "75% Completado" : "100% Completado")
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="button-group">
+                        <form asp-action="Cancelar" asp-controller="Estado" method="post">
+                            <input type="hidden" name="pedidoId" value="@pedido.pedidoId" />
+                            <button type="submit" class="btn-cancelar" onclick="return confirm('¿Seguro que deseas cancelar este pedido?');">
+                                Cancelar Pedido
+                            </button>
+                        </form>
+
+                        @Html.ActionLink("Actualizar Estado", "Actualizar", "Estado", new { pedidoId = pedido.pedidoId }, new { @class = "btn-actualizar" })
                     </div>
                 </div>
-
-
-
-
-                <div class="button-group">
-                    <form asp-action="Cancelar" asp-controller="Estado" method="post">
-                        <input type="hidden" name="pedidoId" value="@pedido.pedidoId" />
-                        <button type="submit" class="btn-cancelar" onclick="return confirm('¿Seguro que deseas cancelar este pedido?');">
-                            Cancelar Pedido
-                        </button>
-                    </form>
-
-                    @Html.ActionLink("Actualizar Estado", "Actualizar", "Estado", new { pedidoId = pedido.pedidoId }, new { @class = "btn-actualizar" })
-                </div>
             </div>
-        </div>
+        }
     }
 </div>
 

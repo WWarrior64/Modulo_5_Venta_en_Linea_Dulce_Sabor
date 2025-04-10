@@ -48,6 +48,8 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
                 HttpContext.Session.SetInt32("UsuarioId", usuario.clienteId);
                 HttpContext.Session.SetString("Nombre", usuario.nombre);
                 HttpContext.Session.SetString("Correo", usuario.correo);
+                HttpContext.Session.SetString("Telefono", usuario.telefono);
+                HttpContext.Session.SetString("Direccion", usuario.direccion);
 
                 //Se redirecciona al método de Index del controlador Home
                 return RedirectToAction("Index", "Inicio");
