@@ -1,6 +1,27 @@
-﻿<form asp-action="CrearPedido" method="post">
-    <!-- para pasar el id de pedido-->
+﻿<style>
+    /* fondo gris claro */
+    .fondo-claro-wrapper {
+        background-color: #d4d4d4;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+</style>
+
+
+<div class="fondo-claro-wrapper">
+<form asp-action="CrearPedido" method="post">
+    <!-- para pasar el id de pedido -->
     @Html.Hidden("pedidoId", ViewData["UltimoPedidoId"])
+
     <div class="row">
         <!-- Columna Izquierda: Dirección de Envío -->
         <div class="col-md-8">
@@ -25,7 +46,7 @@
             </div>
         </div>
 
-        <!-- Columna Derecha: Resumen del Pedido + Pago -->
+        <!-- Columna Derecha: Resumen del Pedido + Detalles del Cliente -->
         <div class="col-md-4 d-flex flex-column">
             <!-- Detalles del Cliente -->
             <div class="card mb-3">
@@ -43,10 +64,10 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Producto</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
+                                <th>@Html.Label("Producto")</th>
+                                <th>@Html.Label("Descripción")</th>
+                                <th>@Html.Label("Cantidad")</th>
+                                <th>@Html.Label("Precio")</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,9 +104,7 @@
                                                 @item.promocionDescrip
                                             }
                                         </td>
-                                        <td>
-                                            @item.cantidad,
-                                        </td>
+                                        <td>@item.cantidad</td>
                                         <td>
                                             @if (item.platilloPrecio > 0)
                                             {
@@ -119,51 +138,58 @@
                 </div>
             </div>
 
-            <div class="text-right">
+                <div class="text-right" style="border:1px solid #ddd; border-radius:10px; background-color:white; padding:5px;">
                 <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
                 <h4>Total: @String.Format("{0:C}", ViewData["Total"])</h4>
             </div>
         </div>
     </div>
 
-    <!-- Pago -->
-    <div class="card mt-4 ">
-        <div class="card-body">
-            <h3>Método de Pago</h3>
-            <div class="form-group">
-                @Html.Label("Tipo")
-                @Html.DropDownList("metodopagoId", (SelectList)ViewData["MetodosPago"], "Seleccione un método", new { @class = "form-control" })
+    <!-- Nueva fila para Pago y Recomendaciones, alineada con la columna izquierda -->
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Pago -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3>Método de Pago</h3>
+                        <div class="form-group">
+                            @Html.Label("Tipo")
+                            @Html.DropDownList("metodopagoId", (SelectList)ViewData["MetodosPago"], "Seleccione un método", new { @class = "form-control", required = "required" })
+                        </div>
+
+                    <div class="form-group">
+                        @Html.Label("Número de Tarjeta")
+                        @Html.TextBox("NumeroTarjeta", null, new { @class = "form-control", placeholder = "Ingrese número de tarjeta" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Expiración")
+                        @Html.TextBox("Expiracion", null, new { @class = "form-control", placeholder = "MM/AA" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("CVC")
+                        @Html.TextBox("CVC", null, new { @class = "form-control", placeholder = "Código de seguridad" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">Pagar</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                @Html.Label("Número de Tarjeta")
-                @Html.TextBox("NumeroTarjeta", null, new { @class = "form-control", placeholder = "Ingrese número de tarjeta" })
+            <!-- Recomendaciones -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3>Recomendaciones de Pago</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">Use una tarjeta válida con saldo suficiente.</li>
+                        <li class="list-group-item">Verifique que el número de tarjeta esté correcto antes de confirmar.</li>
+                        <li class="list-group-item">Si usa PayPal, asegúrese de estar conectado a su cuenta.</li>
+                        <li class="list-group-item">Revise los términos y condiciones antes de procesar el pago.</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Expiración")
-                @Html.TextBox("Expiracion", null, new { @class = "form-control", placeholder = "MM/AA" })
-            </div>
-
-            <div class="form-group">
-                @Html.Label("CVC")
-                @Html.TextBox("CVC", null, new { @class = "form-control", placeholder = "Código de seguridad" })
-            </div>
-
-            <button type="submit" class="btn btn-success btn-block">Pagar</button>
         </div>
     </div>
 
-    <!-- Recomendaciones -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <h3>Recomendaciones de Pago</h3>
-            <ul class="list-group">
-                <li class="list-group-item">Use una tarjeta válida con saldo suficiente.</li>
-                <li class="list-group-item">Verifique que el número de tarjeta esté correcto antes de confirmar.</li>
-                <li class="list-group-item">Si usa PayPal, asegúrese de estar conectado a su cuenta.</li>
-                <li class="list-group-item">Revise los términos y condiciones antes de procesar el pago.</li>
-            </ul>
-        </div>
-    </div>
 </form>
+</div>

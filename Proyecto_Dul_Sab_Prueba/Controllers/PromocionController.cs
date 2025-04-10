@@ -15,6 +15,8 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
 
         public IActionResult Index()
         {
+            //Para calcular el tiempo de las promociones
+            var currentDate = DateTime.Now;
 
             var listadoDePromocion = (from p in _ventaDbContext.Promocion
                                       select new
