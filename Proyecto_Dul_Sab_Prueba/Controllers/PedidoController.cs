@@ -33,6 +33,12 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
 
             var clienteId = cliente.clienteId;
 
+            var ubicacion = _ventaDbContext.Ubicacion_Geografica.FirstOrDefault(u => u.clienteId == cliente.clienteId);
+
+            ViewData["Direccion"] = cliente.direccion;
+            ViewData["Ciudad"] = ubicacion.ciudad;
+            ViewData["Departamento"] = ubicacion.departamento;
+
             // Obtener los productos en el carrito
             var productosEnCarrito = (from i in _ventaDbContext.Item
                                         where i.estado != null && i.estado.Trim().ToLower() == "carrito"

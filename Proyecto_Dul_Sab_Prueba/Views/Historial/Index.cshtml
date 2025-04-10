@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Historial de Pedidos - Dulce Sabor";
+}
+
+<h1 class="text-center">Historial de Pedidos</h1>
+
+<div class="container">
+    @if (ViewData["listadoDePedidos"] == null || !((IEnumerable<dynamic>)ViewData["listadoDePedidos"]).Any())
+    {
+        <div class="alert alert-warning text-center">
+            No tienes pedidos entregados aún.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>@Html.DisplayName("Pedido ID")</th>
+                        <th>@Html.DisplayName("Fecha del Pedido")</th>
+                        <th>@Html.DisplayName("Método de Pago")</th>
+                        <th>@Html.DisplayName("Total")</th>
+                        <th>@Html.DisplayName("Acciones")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pedido in (IEnumerable<dynamic>)ViewData["listadoDePedidos"])
+                    {
+                        <tr>
+                            <td>@pedido.pedidoId</td>
+                            <td>@pedido.fechapedido?.ToString("dd-MMM-yyyy")</td>
+                            <td>@pedido.metodoPagoNombre</td>
+                            <td>@String.Format("{0:C}", pedido.total)</td>
+                            <td>
+                                <a class="btn btn-sm btn-info"
+                                   data-bs-toggle="collapse"
+                                   href="#detalles-@pedido.pedidoId"
+                                   role="button"
+                                   aria-expanded="false"
+                                   aria-controls="detalles-@pedido.pedidoId">
+                                    Ver Detalles (@pedido.detalles.Count)
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5">
+                                <div class="collapse card card-body" id="detalles-@pedido.pedidoId">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>@Html.DisplayName("Nombre Producto")</th>
+                                                <th>@Html.DisplayName("Descripción")</th>
+                                                <th>@Html.DisplayName("Cantidad")</th>
+                                                <th>@Html.DisplayName("Precio Unitario")</th>
+                                                <th>@Html.DisplayName("Subtotal")</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var detalle in pedido.detalles)
+                                            {
+                                                <tr>
+                                                    <td>@detalle.nombreProducto</td>
+                                                    <td>@detalle.descripcion</td>
+                                                    <td>@detalle.cantidad</td>
+                                                    <td>@String.Format("{0:C}", detalle.preciounitario)</td>
+                                                    <td>@String.Format("{0:C}", detalle.subtotal)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 📌 Acciones al final -->
+        <div class="text-center mt-4">
+            <button class="btn btn-warning mx-2">Descargar Historial</button>
+            @Html.ActionLink("Volver al Inicio", "Index", "Home", null, new { @class = "btn btn-info mx-2" })
+        </div>
+    }
+</div>

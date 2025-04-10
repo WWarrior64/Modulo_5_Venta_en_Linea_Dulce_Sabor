@@ -37,7 +37,6 @@ else
                         <th>Descripción</th>
                         <th>Cant.</th>
                         <th>Precio</th>
-                        <th>IVA</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -49,7 +48,6 @@ else
                             <td>@detalle.Nombre</td>
                             <td>@detalle.cantidad</td>
                             <td>@String.Format("{0:C}", detalle.PrecioUnitario)</td>
-                            <td>@String.Format("{0:C}", (detalle.PrecioUnitario * detalle.cantidad) * 0.13m)</td>
                             <td>@String.Format("{0:C}", detalle.PrecioUnitario * detalle.cantidad + (detalle.PrecioUnitario * detalle.cantidad) * 0.13m)</td>
                         </tr>
                     }
@@ -58,7 +56,6 @@ else
 
             <div class="text-right">
                 <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
-                <h4>IVA (13%): @String.Format("{0:C}", ViewData["IVA"])</h4>
                 <h3><strong>Total:</strong> @String.Format("{0:C}", ViewData["Total"])</h3>
             </div>
 

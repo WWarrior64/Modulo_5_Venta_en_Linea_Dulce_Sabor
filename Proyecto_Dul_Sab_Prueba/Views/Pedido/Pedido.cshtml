@@ -8,16 +8,18 @@
                 <div class="card-body">
                     <h3>Dirección de Envío</h3>
                     <div class="form-group">
-                        @Html.Label("País")
-                        @Html.TextBox("pais", null, new { @class = "form-control", placeholder = "Ingrese su país" })
+                        @Html.Label("Dirección")
+                        @Html.TextBox("direccion", ViewData["Direccion"], new { @class = "form-control", required = "required" })
                     </div>
+
                     <div class="form-group">
                         @Html.Label("Ciudad")
-                        @Html.TextBox("ciudad", null, new { @class = "form-control", placeholder = "Ingrese su ciudad" })
+                        @Html.TextBox("ciudad", ViewData["Ciudad"], new { @class = "form-control", required = "required" })
                     </div>
+
                     <div class="form-group">
-                        @Html.Label("Región")
-                        @Html.TextBox("region", null, new { @class = "form-control", placeholder = "Ingrese su región" })
+                        @Html.Label("Departamento")
+                        @Html.TextBox("departamento", ViewData["Departamento"], new { @class = "form-control", required = "required" })
                     </div>
                 </div>
             </div>

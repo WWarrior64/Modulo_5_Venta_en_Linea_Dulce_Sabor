@@ -77,8 +77,7 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
 
             // Calcular totales
             decimal subtotal = detallesPedido.Sum(dp => dp.PrecioUnitario * dp.cantidad);
-            decimal iva = subtotal * 0.13m;
-            decimal total = subtotal + iva;
+            decimal total = subtotal;
 
             // Pasar los datos a la vista
             ViewData["NombreCliente"] = cliente.nombre;
@@ -90,7 +89,6 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
             ViewData["MetodoPago"] = MetodoPago.nombre;
             ViewData["DetallesPedido"] = detallesPedido;
             ViewData["Subtotal"] = subtotal;
-            ViewData["IVA"] = iva;
             ViewData["Total"] = total;
 
             return View();
