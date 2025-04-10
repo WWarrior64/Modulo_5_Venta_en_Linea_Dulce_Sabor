@@ -12,15 +12,18 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        overflow: hidden;
     }
 
     .login-container {
         display: flex;
-        width: 850px;
         background: white;
         border-radius: 15px;
         overflow: hidden;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        justify-content: center;
+        align-items: center;
+        position: relative;
     }
 
     .image-section {
@@ -64,9 +67,9 @@
         transition: 0.3s;
     }
 
-        .btn-custom:hover {
-            background: #e64a19;
-        }
+    .btn-custom:hover {
+        background: #e64a19;
+    }
 
     .social-buttons {
         display: flex;
@@ -75,14 +78,14 @@
         width: 100%;
     }
 
-        .social-buttons button {
-            width: 48%;
-            padding: 10px;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+    .social-buttons button {
+        width: 48%;
+        padding: 10px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
 
     .btn-google {
         background: #db4437;
@@ -99,25 +102,26 @@
         font-size: 14px;
     }
 
-        .register-link a {
-            color: #ff5722;
-            text-decoration: none;
-        }
+    .register-link a {
+        color: #ff5722;
+        text-decoration: none;
+    }
 </style>
 
 <div class="login-container">
     <div class="image-section"></div>
     <div class="form-section">
         <h1>Bienvenido a Dulce Sabor</h1>
-        <form method="post">
-            <input type="email" name="txtemail" class="form-control" placeholder="Correo electrónico" required>
-            <input type="password" name="txtpassword" class="form-control" placeholder="Contraseña" required>
+        @using (Html.BeginForm("Autenticar", "Login", FormMethod.Post))
+        {
+            @Html.TextBox("txtemail", null, new { @class = "form-control", placeholder = "Correo electrónico", required = "required" })
+            @Html.Password("txtpassword", null, new { @class = "form-control", placeholder = "Contraseña", required = "required" })
             <button type="submit" class="btn-custom">Iniciar Sesión</button>
-        </form>
+        }
         <div class="social-buttons">
             <button class="btn-google" onclick="window.location.href='https://accounts.google.com/signin'">Google</button>
             <button class="btn-facebook" onclick="window.location.href='https://www.facebook.com/login/'">Facebook</button>
         </div>
-        <p class="register-link">¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+        <p class="register-link">¿No tienes una cuenta? @Html.ActionLink("Regístrate", "Register", "Account")</p>
     </div>
 </div>

@@ -188,7 +188,7 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
             _ventaDbContext.SaveChanges();
 
             // Redirigir a la vista de confirmación o éxito
-            return RedirectToAction("Confirmacion", "Pedido");
+            return RedirectToAction("Invoice", "Invoice", new { pedidoId = nuevoPedido.pedidoId });
         }
     }
 }

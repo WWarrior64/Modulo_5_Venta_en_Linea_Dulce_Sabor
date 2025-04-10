@@ -1,81 +1,73 @@
-﻿@*@model VIstas_de_pago_y_fatura.Models.Pedido
-
-@{
-    ViewBag.Title = "Confirmación de Pago - Dulce Sabor";
-    var subtotal = Model.ResumenPedido != null && Model.ResumenPedido.Any()
-        ? Model.ResumenPedido.Sum(item => item.Precio)
-        : 0m;
-    var iva = subtotal * 0.13m; // IVA del 13%
-    var total = subtotal + iva;
+﻿@{
+    ViewBag.Title = "Factura - Dulce Sabor";
 }
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card w-75">
+@if (ViewData["MetodoPago"] != null && ViewData["MetodoPago"].ToString() == "Efectivo")
+{
+    <h2 class="text-center text-warning">⚠️ Pedido Procesado, Pendiente de Pago</h2>
+}
+else
+{
+    <h2 class="text-center text-success">✅ Pago Realizado Exitosamente</h2>
+}
+<hr />
+
+<div class="container">
+    <div class="card shadow-lg">
         <div class="card-body">
-            <h1 class="text-center text-success">Pago Realizado Exitosamente</h1>
-            <div class="text-center mb-3">
-                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+            <h3 class="text-center text-primary">FACTURA #@ViewData["PedidoId"]</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Cliente:</strong> @ViewData["NombreCliente"]</p>
+                    <p><strong>Email:</strong> @ViewData["CorreoCliente"]</p>
+                    <p><strong>Teléfono:</strong> @ViewData["TelefonoCliente"]</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <p><strong>Fecha:</strong> @ViewData["FechaPedido"]</p>
+                    <p><strong>Orden de Pedido:</strong> #@ViewData["PedidoId"]</p>
+                    <p><strong>Tipo de Pago:</strong> @ViewData["MetodoPago"]</p>
+                </div>
             </div>
-
-            <!-- 📌 Factura -->
-            <h2 class="text-center">FACTURA #000000</h2>
             <hr />
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Nombre:</strong> @Model.DatosEnvio.Nombre</li>
-                <li class="list-group-item"><strong>Email:</strong> @Model.DatosEnvio.Email</li>
-                <li class="list-group-item"><strong>Teléfono:</strong> @Model.DatosEnvio.Telefono</li>
-                <li class="list-group-item"><strong>Fecha:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</li>
-                <li class="list-group-item"><strong>Orden de Pedido:</strong> #00000</li>
-                <li class="list-group-item"><strong>Tipo de Pago:</strong> @Model.MetodoPago.Tipo</li>
-            </ul>
 
-            <!-- 📌 Tabla de Productos -->
-            <h3 class="text-center mt-3">Detalles del Pedido</h3>
-            <div class="table-responsive">
-                <table class="table table-bordered text-center">
-                    <thead class="thead-dark">
+            <table class="table table-bordered text-center">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Cant.</th>
+                        <th>Precio</th>
+                        <th>IVA</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detalle in (IEnumerable<dynamic>)ViewData["DetallesPedido"])
+                    {
                         <tr>
-                            <th>Código</th>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>IVA</th>
-                            <th>Total</th>
+                            <td>@detalle.detallepedidoId</td>
+                            <td>@detalle.Nombre</td>
+                            <td>@detalle.cantidad</td>
+                            <td>@String.Format("{0:C}", detalle.PrecioUnitario)</td>
+                            <td>@String.Format("{0:C}", (detalle.PrecioUnitario * detalle.cantidad) * 0.13m)</td>
+                            <td>@String.Format("{0:C}", detalle.PrecioUnitario * detalle.cantidad + (detalle.PrecioUnitario * detalle.cantidad) * 0.13m)</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ResumenPedido != null && Model.ResumenPedido.Any())
-                        {
-                            foreach (var item in Model.ResumenPedido)
-                            {
-                                <tr>
-                                    <td>#@Model.ResumenPedido.IndexOf(item)</td>
-                                    <td>@item.Nombre - @item.Descripcion</td>
-                                    <td>@item.Cantidad</td>
-                                    <td>@String.Format("{0:C}", item.Precio)</td>
-                                    <td>@String.Format("{0:C}", item.Precio * 0.13m)</td>
-                                    <td>@String.Format("{0:C}", item.Precio * 1.13m)</td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr><td colspan="6" class="text-center">No hay productos en el pedido.</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <hr />
+                    }
+                </tbody>
+            </table>
+
             <div class="text-right">
-                <h4>IVA: @String.Format("{0:C}", iva)</h4>
-                <h4>Total: @String.Format("{0:C}", total)</h4>
+                <h4>Subtotal: @String.Format("{0:C}", ViewData["Subtotal"])</h4>
+                <h4>IVA (13%): @String.Format("{0:C}", ViewData["IVA"])</h4>
+                <h3><strong>Total:</strong> @String.Format("{0:C}", ViewData["Total"])</h3>
             </div>
 
-            <!-- 📌 Acciones Abajo -->
+            <hr />
+
             <div class="text-center mt-4">
-                <button class="btn btn-warning mx-2">Descargar Factura</button>
-                <button class="btn btn-info mx-2">Ver Estado del Pedido</button>
+                @Html.ActionLink("📄 Descargar Factura", "DescargarFactura", "Invoice", new { pedidoId = ViewData["PedidoId"] }, new { @class = "btn btn-success btn-lg" })
+                @Html.ActionLink("📦 Ver Estado del Pedido", "EstadoPedido", "Pedido", new { pedidoId = ViewData["PedidoId"] }, new { @class = "btn btn-primary btn-lg" })
             </div>
         </div>
     </div>
-</div>*@
+</div>

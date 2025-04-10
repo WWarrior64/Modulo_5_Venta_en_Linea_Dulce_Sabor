@@ -1,4 +1,6 @@
 ﻿<form asp-action="CrearPedido" method="post">
+    <!-- para pasar el id de pedido-->
+    @Html.Hidden("pedidoId", ViewData["UltimoPedidoId"])
     <div class="row">
         <!-- Columna Izquierda: Dirección de Envío -->
         <div class="col-md-8">
