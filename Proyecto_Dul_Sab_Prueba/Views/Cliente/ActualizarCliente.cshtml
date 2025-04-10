@@ -3,79 +3,105 @@
 }
 
 <style>
+    .contenedor-principal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
     .perfil-container {
-        max-width: 600px;
-        margin: 50px auto;
-        background: white;
-        padding: 30px;
+        width: 700px;
+        background: #fff;
         border-radius: 12px;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        padding: 40px;
         text-align: center;
     }
 
-    .perfil-info {
-        font-size: 18px;
-        margin-bottom: 10px;
+    h2 {
+        color: #333;
+        font-size: 22px;
+        margin-bottom: 20px;
     }
 
     .form-control {
         width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 6px;
         border: 1px solid #ccc;
-        outline: none;
+        background-color: #f9f9f9;
+        font-size: 16px;
     }
 
     .btn-custom {
-        display: block;
+        width: 100%;
         padding: 12px;
         font-size: 16px;
-        border-radius: 8px;
+        border-radius: 6px;
         text-decoration: none;
-        color: white;
         text-align: center;
-        background-color: #444;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
     }
 
     .btn-save {
-        background-color: #28a745;
+        background: #555;
+        color: white;
     }
 
+        .btn-save:hover {
+            background: #333;
+        }
+
     .btn-back {
-        background-color: #6c757d;
+        background: #666;
+        color: white;
+    }
+
+        .btn-back:hover {
+            background: #444;
+        }
+
+    .botones-container{
+        padding-top:50px;
     }
 </style>
 
-<div class="perfil-container">
-    <h2>Editar Perfil</h2>
+<div class="contenedor-principal">
+    <div class="perfil-container">
+        <h2>Editar Perfil</h2>
 
-    @using (Html.BeginForm("ActualizarCliente", "Cliente", FormMethod.Post))
-    {
-        <div>
-            @Html.Label("Nombre Completo")
-            @Html.TextBox("nombre", ViewData["Nombre"], new { @class = "form-control", required = "required" })
-        </div>
+        @using (Html.BeginForm("ActualizarCliente", "Cliente", FormMethod.Post))
+        {
+            <div>
+                @Html.Label("Nombre Completo")
+                @Html.TextBox("nombre", ViewData["Nombre"], new { @class = "form-control", required = "required" })
+            </div>
 
-        <div>
-            @Html.Label("Teléfono")
-            @Html.TextBox("telefono", ViewData["Telefono"], new { @class = "form-control", required = "required" })
-        </div>
+            <div>
+                @Html.Label("Teléfono")
+                @Html.TextBox("telefono", ViewData["Telefono"], new { @class = "form-control", required = "required" })
+            </div>
 
-        <div>
-            @Html.Label("Dirección")
-            @Html.TextBox("direccion", ViewData["Direccion"], new { @class = "form-control", required = "required" })
-        </div>
+            <div>
+                @Html.Label("Dirección")
+                @Html.TextBox("direccion", ViewData["Direccion"], new { @class = "form-control", required = "required" })
+            </div>
 
-        <div>
-            @Html.Label("Correo Electrónico")
-            @Html.TextBox("correo", ViewData["Correo"], new { @class = "form-control", required = "required", readonly = "readonly" })
-        </div>
+            <div>
+                @Html.Label("Correo Electrónico")
+                @Html.TextBox("correo", ViewData["Correo"], new { @class = "form-control", required = "required", @readonly = "readonly" })
+            </div>
 
-    <button type="submit" class="btn-custom btn-save">Guardar Cambios</button>
+            <button type="submit" class="btn-custom btn-save">Guardar Cambios</button>
         }
 
-    <div class="botones-container">
-        @Html.ActionLink("🏠 Volver", "Index", "Cliente", null, new { @class = "btn-custom btn-back" })
+        <div class="botones-container">
+            @Html.ActionLink("Volver", "Index", "Cliente", null, new { @class = "btn-custom btn-back" })
+        </div>
     </div>
 </div>
