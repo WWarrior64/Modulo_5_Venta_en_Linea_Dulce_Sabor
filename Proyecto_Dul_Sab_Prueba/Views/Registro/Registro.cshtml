@@ -1,0 +1,173 @@
+﻿@{
+    Layout = "_LayoutInicio";
+    ViewData["Title"] = "Registro";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #ff9800, #ff5722);
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        padding-top: 200px;
+        display: flex;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-section {
+        width: 50%;
+        background: url('/images/burger.jpg') no-repeat center center/cover;
+    }
+
+    .form-section {
+        width: 50%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        background: #ff5722;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-custom:hover {
+            background: #e64a19;
+        }
+
+    .social-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+        .social-buttons button {
+            width: 48%;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+    .btn-google {
+        background: #db4437;
+        color: white;
+    }
+
+    .btn-facebook {
+        background: #3b5998;
+        color: white;
+    }
+
+    .register-link {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .register-link a {
+            color: #ff5722;
+            text-decoration: none;
+        }
+</style>
+
+<div class="login-container">
+    <div class="image-section"></div>
+    <div class="form-section">
+        <h1>Bienvenido a Dulce Sabor - Registro</h1>
+
+        @using (Html.BeginForm("Registro", "Registro", FormMethod.Post))
+        {
+            <div>
+                @Html.Label("Nombre")
+                @Html.TextBox("nombre", null, new { @class = "form-control", placeholder = "Nombre Completo", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Teléfono")
+                @Html.TextBox("telefono", null, new { @class = "form-control", placeholder = "Teléfono", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Dirección")
+                @Html.TextBox("direccion", null, new { @class = "form-control", placeholder = "Dirección", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Departamento")
+                @Html.TextBox("departamento", null, new { @class = "form-control", placeholder = "Departamento", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Ciudad")
+                @Html.TextBox("ciudad", null, new { @class = "form-control", placeholder = "Ciudad", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Código Postal")
+                @Html.TextBox("codigopostal", null, new { @class = "form-control", placeholder = "Código Postal", required = "required" })
+            </div>
+
+            <div>
+                @Html.Label("Correo Electrónico")
+                @Html.TextBox("correo", null, new { @class = "form-control", placeholder = "Correo Electrónico", required = "required" })
+
+                @if (ViewData["ErrorCorreo"] != null)
+                {
+                    <p class="text-danger">@ViewData["ErrorCorreo"]</p>
+                }
+            </div>
+
+            <div>
+                @Html.Label("Contraseña")
+                @Html.Password("contraseña", null, new { @class = "form-control", placeholder = "Contraseña", required = "required" })
+            </div>
+
+            <button type="submit" class="btn-custom">Registrar</button>
+        }
+
+        <div class="social-buttons">
+            <button class="btn-google" onclick="window.location.href='https://accounts.google.com/signin'">Google</button>
+            <button class="btn-facebook" onclick="window.location.href='https://www.facebook.com/login/'">Facebook</button>
+        </div>
+
+        <p class="register-link">
+            ¿Ya tienes una cuenta?
+            @Html.ActionLink("Iniciar sesión", "Autenticar", "Login", null, new { @class = "text-danger" })
+        </p>
+    </div>
+</div>

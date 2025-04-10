@@ -109,7 +109,7 @@
 </style>
 
 <div class="login-container">
-    <div class="image-section"></div>
+    <img class="image-section" src="/Images/burger.jpg" alt="Dulce Sabor">
     <div class="form-section">
         <h1>Bienvenido a Dulce Sabor</h1>
         @using (Html.BeginForm("Autenticar", "Login", FormMethod.Post))
@@ -122,6 +122,6 @@
             <button class="btn-google" onclick="window.location.href='https://accounts.google.com/signin'">Google</button>
             <button class="btn-facebook" onclick="window.location.href='https://www.facebook.com/login/'">Facebook</button>
         </div>
-        <p class="register-link">¿No tienes una cuenta? @Html.ActionLink("Regístrate", "Register", "Account")</p>
+        <p class="register-link">¿No tienes una cuenta? @Html.ActionLink("Regístrate", "Registro", "Registro")</p>
     </div>
 </div>

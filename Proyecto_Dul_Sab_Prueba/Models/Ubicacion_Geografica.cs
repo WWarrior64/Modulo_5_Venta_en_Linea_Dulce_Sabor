@@ -25,11 +25,12 @@ namespace Proyecto_Dul_Sab_Prueba.Models
         [Display(Name = "Código Postal")]
         public string codigopostal { get; set; }
 
-        [Required]
         [ForeignKey("Clientes")]
         [Display(Name = "ID Cliente")]
         public int clienteId { get; set; }
 
         public virtual Clientes Cliente { get; set; }
+
+        public string ubicacion => $"{departamento} - {ciudad}";
     }
 }

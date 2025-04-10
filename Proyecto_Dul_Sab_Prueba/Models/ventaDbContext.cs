@@ -19,6 +19,7 @@ namespace Proyecto_Dul_Sab_Prueba.Models
         public DbSet<Detalle_Pedido_en_Linea> Detalle_Pedido_En_Linea { get; set; }
         public DbSet<Clientes> Clientes { get; set; }
         public DbSet<Metodo_Pago> Metodo_Pago { get; set; }
+        public DbSet<Ubicacion_Geografica> Ubicacion_Geografica { get; set; }
 
     }
 }
