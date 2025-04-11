@@ -9,105 +9,107 @@
 
 <div class="row mb-4">
     <!-- Primer formulario con la tabla de productos -->
-    <form asp-action="ActualizarCarrito" class="col-md-8">
-        <div>
-            <div class="text-center rounded border bg-dark text-white p-3">
-                <h4 class="mb-0">Total de productos en el carrito: @(ViewData["listadoCarrito"] != null ? ((IEnumerable<dynamic>)ViewData["listadoCarrito"]).Count() : 0)</h4>
-            </div>
+        <div class="col-md-8">
+            <form asp-action="ActualizarCarrito">
+                <div class="text-center rounded border bg-dark text-white p-3">
+                    <h4 class="mb-0">Total de productos en el carrito: @(ViewData["listadoCarrito"] != null ? ((IEnumerable<dynamic>)ViewData["listadoCarrito"]).Count() : 0)</h4>
+                </div>
 
-            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                <table class="table table-bordered text-center" style="background-color:#edeff2;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>@Html.Label("lblProducto", "Producto")</th>
-                            <th>@Html.Label("lblDescripcion", "Descripción")</th>
-                            <th>@Html.Label("lblCantidad", "Cantidad")</th>
-                            <th>@Html.Label("lblPrecio", "Precio")</th>
-                            <th>@Html.Label("lblAcciones", "Acciones")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in (IEnumerable<dynamic>)ViewData["listadoCarrito"])
-                        {
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-bordered text-center" style="background-color:#edeff2;">
+                        <thead>
                             <tr>
-                                <td>
-                                    @if (item.platilloImg != null)
-                                    {
-                                        <img src="@Url.Content(item.platilloImg)" alt="@item.nombrePlat" style="width:80px;" />
-                                    }
-                                    else if (item.comboImg != null)
-                                    {
-                                        <img src="@Url.Content(item.comboImg)" alt="@item.nombreComb" style="width:80px;" />
-                                    }
-                                    else if (item.promocionImg != null)
-                                    {
-                                        <img src="@Url.Content(item.promocionImg)" alt="@item.nombreProm" style="width:80px;" />
-                                    }
-                                </td>
-                                <td>
-                                    @if (item.nombrePlat != null)
-                                    {
-                                        <strong>@item.nombrePlat</strong>
-                                        <br />
-                                    }
-                                    else if (item.nombreComb != null)
-                                    {
-                                        <strong>@item.nombreComb</strong>
-                                        <br />
-                                    }
-                                    else if (item.nombreProm != null)
-                                    {
-                                        <strong>@item.nombreProm</strong>
-                                        <br />
-                                    }
-                                </td>
-                                <td>
-                                    @if (item.platilloDescrip != null)
-                                    {
-                                        @item.platilloDescrip
-                                    }
-                                    else if (item.comboDescrip != null)
-                                    {
-                                        @item.comboDescrip
-                                    }
-                                    else if (item.promocionDescrip != null)
-                                    {
-                                        @item.promocionDescrip
-                                    }
-                                </td>
-                                <td>
-                                    @Html.Hidden("ItemId[]", (object)item.ItemId)
-                                    @Html.TextBox("Cantidad[]", (object)item.cantidad, new { @class = "form-control text-center", type = "number", min = "1" })
-                                </td>
-                                <td>
-                                    @if (item.platilloPrecio > 0)
-                                    {
-                                        @String.Format("{0:C}", item.platilloPrecio)
-                                    }
-                                    else if (item.comboPrecio > 0)
-                                    {
-                                        @String.Format("{0:C}", item.comboPrecio)
-                                    }
-                                    else if (item.promocionPrecio > 0)
-                                    {
-                                        @String.Format("{0:C}", item.promocionPrecio)
-                                    }
-                                    else if (item.promocionDesc > 0 && item.promocionPrecio == 0)
-                                    {
-                                        <span style="color:red;">@String.Format("{0:C}", item.promocionDesc)</span>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Eliminar", "RemoveItem", new { id = item.ItemId }, new { @class = "btn btn-sm", @style = "background-color: darkorange; color: white;" })
-                                </td>
+                                <th></th>
+                                <th>@Html.Label("lblProducto", "Producto")</th>
+                                <th>@Html.Label("lblDescripcion", "Descripción")</th>
+                                <th>@Html.Label("lblCantidad", "Cantidad")</th>
+                                <th>@Html.Label("lblPrecio", "Precio")</th>
+                                <th>@Html.Label("lblAcciones", "Acciones")</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in (IEnumerable<dynamic>)ViewData["listadoCarrito"])
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.platilloImg != null)
+                                        {
+                                            <img src="@Url.Content(item.platilloImg)" alt="@item.nombrePlat" style="width:80px;" />
+                                        }
+                                        else if (item.comboImg != null)
+                                        {
+                                            <img src="@Url.Content(item.comboImg)" alt="@item.nombreComb" style="width:80px;" />
+                                        }
+                                        else if (item.promocionImg != null)
+                                        {
+                                            <img src="@Url.Content(item.promocionImg)" alt="@item.nombreProm" style="width:80px;" />
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.nombrePlat != null)
+                                        {
+                                            <strong>@item.nombrePlat</strong>
+                                            <br />
+                                        }
+                                        else if (item.nombreComb != null)
+                                        {
+                                            <strong>@item.nombreComb</strong>
+                                            <br />
+                                        }
+                                        else if (item.nombreProm != null)
+                                        {
+                                            <strong>@item.nombreProm</strong>
+                                            <br />
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.platilloDescrip != null)
+                                        {
+                                            @item.platilloDescrip
+                                        }
+                                        else if (item.comboDescrip != null)
+                                        {
+                                            @item.comboDescrip
+                                        }
+                                        else if (item.promocionDescrip != null)
+                                        {
+                                            @item.promocionDescrip
+                                        }
+                                    </td>
+                                    <td>
+                                        <form asp-action="ActualizarCarrito" method="post">
+                                            @Html.Hidden("ItemId[]", (object)item.ItemId)
+                                            @Html.TextBox("Cantidad[]", (object)item.cantidad, new { @class = "form-control text-center", type = "number", min = "1" })
+                                        </form>
+                                    </td>
+                                    <td>
+                                        @if (item.platilloPrecio > 0)
+                                        {
+                                            @String.Format("{0:C}", item.platilloPrecio)
+                                        }
+                                        else if (item.comboPrecio > 0)
+                                        {
+                                            @String.Format("{0:C}", item.comboPrecio)
+                                        }
+                                        else if (item.promocionPrecio > 0)
+                                        {
+                                            @String.Format("{0:C}", item.promocionPrecio)
+                                        }
+                                        else if (item.promocionDesc > 0 && item.promocionPrecio == 0)
+                                        {
+                                            <span style="color:red;">@String.Format("{0:C}", item.promocionDesc)</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Eliminar", "RemoveItem", new { id = item.ItemId }, new { @class = "btn btn-sm", @style = "background-color: darkorange; color: white;" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
-    </form>
 
     <!-- Segundo formulario con el checkout a la derecha -->
     <form asp-action="Checkout" method="post" class="col-md-4">
