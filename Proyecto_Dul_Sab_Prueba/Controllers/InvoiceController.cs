@@ -73,10 +73,11 @@ namespace Proyecto_Dul_Sab_Prueba.Controllers
                                       Descripcion = p != null ? p.descripcion : c != null ? c.descripcion : pr != null ? pr.descripcion : "Sin descripción",
                                       dp.cantidad,
                                       PrecioUnitario = p != null ? p.precio : c != null ? c.precio : pr != null ? pr.precio : 0,
+                                      Descuento = pr != null ? pr.descuento : 0
                                   }).ToList();
 
             // Calcular totales
-            decimal subtotal = detallesPedido.Sum(dp => dp.PrecioUnitario * dp.cantidad);
+            decimal subtotal = detallesPedido.Sum(dp => (dp.PrecioUnitario - dp.Descuento) * dp.cantidad);
             decimal total = subtotal;
 
             // Pasar los datos a la vista

@@ -47,8 +47,9 @@ else
                             <td>@detalle.detallepedidoId</td>
                             <td>@detalle.Nombre</td>
                             <td>@detalle.cantidad</td>
-                            <td>@String.Format("{0:C}", detalle.PrecioUnitario)</td>
-                            <td>@String.Format("{0:C}", detalle.PrecioUnitario * detalle.cantidad + (detalle.PrecioUnitario * detalle.cantidad) * 0.13m)</td>
+                            <td>@String.Format("{0:C}", detalle.PrecioUnitario - detalle.Descuento)</td>
+                            <td>@String.Format("{0:C}", (detalle.PrecioUnitario - detalle.Descuento) * detalle.cantidad)</td>
+
                         </tr>
                     }
                 </tbody>
